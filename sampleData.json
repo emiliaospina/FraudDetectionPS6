@@ -1,0 +1,122 @@
+[
+  {
+    "id": "txn_1001",
+    "accountId": "acc_001",
+    "timestamp": "2026-02-12T08:15:00Z",
+    "amount": 75.5,
+    "currency": "USD",
+    "merchant": "Local Grocery",
+    "category": "groceries",
+    "channel": "debit_card",
+    "location": "Boston, MA",
+    "deviceId": "dev_abc123"
+  },
+  {
+    "id": "txn_1002",
+    "accountId": "acc_001",
+    "timestamp": "2026-02-12T09:05:00Z",
+    "amount": 18.99,
+    "currency": "USD",
+    "merchant": "Coffee Hub",
+    "category": "food",
+    "channel": "mobile_wallet",
+    "location": "Boston, MA",
+    "deviceId": "dev_abc123"
+  },
+  {
+    "id": "txn_1003",
+    "accountId": "acc_002",
+    "timestamp": "2026-02-12T10:20:00Z",
+    "amount": 240.0,
+    "currency": "USD",
+    "merchant": "City Electronics",
+    "category": "electronics",
+    "channel": "chip_card",
+    "location": "Cambridge, MA",
+    "deviceId": "dev_xyz987"
+  },
+  {
+    "id": "txn_1004",
+    "accountId": "acc_003",
+    "timestamp": "2026-02-12T11:00:00Z",
+    "amount": 35.25,
+    "currency": "USD",
+    "merchant": "Metro Transit",
+    "category": "transport",
+    "channel": "tap_to_pay",
+    "location": "Boston, MA",
+    "deviceId": "dev_tap444"
+  },
+  {
+    "id": "txn_1005",
+    "accountId": "acc_004",
+    "timestamp": "2026-02-12T11:50:00Z",
+    "amount": 9100.0,
+    "currency": "USD",
+    "merchant": "CryptoFast Exchange",
+    "category": "financial_services",
+    "channel": "online_transfer",
+    "location": "Unknown VPN",
+    "deviceId": "dev_new991"
+  },
+  {
+    "id": "txn_1006",
+    "accountId": "acc_002",
+    "timestamp": "2026-02-12T12:15:00Z",
+    "amount": 62.1,
+    "currency": "USD",
+    "merchant": "Book Nook",
+    "category": "books",
+    "channel": "debit_card",
+    "location": "Cambridge, MA",
+    "deviceId": "dev_xyz987"
+  },
+  {
+    "id": "txn_1007",
+    "accountId": "acc_005",
+    "timestamp": "2026-02-12T12:55:00Z",
+    "amount": 28.75,
+    "currency": "USD",
+    "merchant": "Lunch Box",
+    "category": "food",
+    "channel": "debit_card",
+    "location": "Providence, RI",
+    "deviceId": "dev_lmn222"
+  },
+  {
+    "id": "txn_1008",
+    "accountId": "acc_001",
+    "timestamp": "2026-02-12T13:40:00Z",
+    "amount": 4800.0,
+    "currency": "USD",
+    "merchant": "Luxury Timepieces Intl",
+    "category": "luxury_goods",
+    "channel": "card_not_present",
+    "location": "Lagos, NG",
+    "deviceId": "dev_unknown000"
+  },
+  {
+    "id": "txn_1009",
+    "accountId": "acc_003",
+    "timestamp": "2026-02-12T14:10:00Z",
+    "amount": 54.3,
+    "currency": "USD",
+    "merchant": "Pharma Plus",
+    "category": "health",
+    "channel": "chip_card",
+    "location": "Boston, MA",
+    "deviceId": "dev_tap444"
+  },
+  {
+    "id": "txn_1010",
+    "accountId": "acc_006",
+    "timestamp": "2026-02-12T15:25:00Z",
+    "amount": 120.0,
+    "currency": "USD",
+    "merchant": "Home Supply",
+    "category": "home",
+    "channel": "debit_card",
+    "location": "Hartford, CT",
+    "deviceId": "dev_home009"
+  }
+]
