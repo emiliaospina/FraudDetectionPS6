@@ -50,5 +50,19 @@
     "country": "Nigeria",
     "flaggedReason": "Anomalous large transaction of $4800 on a new, unknown device from a different country (Nigeria). No previous buying pattern in account history supports such transaction.",
     "flaggedAt": "2026-03-12T20:18:30.080Z"
+  },
+  {
+    "id": "txn_1030",
+    "accountId": "acc_005",
+    "amount": 1211.52,
+    "timestamp": "2026-02-12T23:20:00.000Z",
+    "merchantName": "Beacon Electronics",
+    "merchantCategory": "electronics",
+    "location": "Cambridge, MA",
+    "deviceId": "dev_lmn222",
+    "isNewDevice": false,
+    "country": "USA",
+    "flaggedReason": "Large transaction ($1211.52) with no account history to compare, marked as anomalous with medium severity.",
+    "flaggedAt": "2026-03-12T20:26:10.217Z"
   }
 ]

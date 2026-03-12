@@ -1,4 +1,42 @@
 # FraudDetection PS-6
+
+## Running the App
+
+### Prerequisites
+- Node.js 18+
+- An OpenAI API key
+
+### 1. Install dependencies
+```bash
+cd backend
+npm install
+```
+
+### 2. Set your OpenAI API key
+Create a `.env` file inside the `backend/` folder:
+```bash
+echo "OPENAI_API_KEY=sk-..." > backend/.env
+```
+
+### 3. Start the server
+```bash
+cd backend
+npm start
+```
+
+The server starts on **http://localhost:3000**. Open that URL in your browser.
+
+### 4. Run a fraud detection analysis
+1. Set the **Batch size** (default 20 — processes 100 transactions in 5 parallel batches).
+2. Click **Start Analysis**.
+3. Watch the **Agent Activity** log stream live tool calls and agent reasoning.
+4. Flagged transactions appear in **Suspicious Transactions** as each agent reports them.
+
+---
+
+
+## The task
+
 The goal is to detect Fraud in a large dataset that is larger than the context window. This means we need to break the data into chunks and process these chunks in parallel. 
 The schema in sampleData.json gives some examples of transactions with some most likely fraudulent. We will start with a demo using only 100 transactions but these should be chunked into 5 batches of 20 and processed in parallel.
 The user interface should allow monitoring of Agent and Tool calls so you can check what is happening. You should accumulate fraudulent transactions into a single file. You can view this accumulator as keeping "state" of the app.  
@@ -18,10 +56,9 @@ Parallel Agent/LLM Calls: Send each batch to Openai model concurrently
 Aggregation: Write suspicious transactions into the file and to the UI via a suspiciousTransactions Tool
 
 
-
 ------
 
-Approach:
+## The approach
 
 1. Set up project structure (backend, frontend, data folders)
 2. Create orchestrator (Python/Node) with batch logic
