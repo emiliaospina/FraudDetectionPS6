@@ -1,31 +1,15 @@
 [
   {
-    "id": "txn_1041",
-    "accountId": "acc_004",
-    "amount": 94.19,
-    "timestamp": "2026-02-13T03:32:00.000Z",
-    "merchantName": "FieldHouse Sports",
-    "merchantCategory": "sports",
-    "location": "Cambridge, MA",
-    "deviceId": "dev_home004",
-    "isNewDevice": false,
-    "country": "USA",
-    "flaggedReason": "Device inconsistency noted: No device history to verify against, severity low.",
-    "flaggedAt": "2026-03-12T19:22:12.768Z"
-  },
-  {
-    "id": "txn_1042",
-    "accountId": "acc_007",
-    "amount": 835.65,
-    "timestamp": "2026-02-13T03:56:00.000Z",
-    "merchantName": "Aurora Stays",
-    "merchantCategory": "lodging",
-    "location": "Chicago, IL",
-    "deviceId": "dev_007_042",
-    "isNewDevice": false,
-    "country": "USA",
-    "flaggedReason": "Device inconsistency noted: No device history to verify against, severity low.",
-    "flaggedAt": "2026-03-12T19:22:39.279Z"
+    "id": "txn_1043",
+    "accountId": "acc_001",
+    "amount": 2420.56,
+    "timestamp": "2026-02-13T04:21:00.000Z",
+    "merchantName": "Luxury Timepieces Intl",
+    "merchantCategory": "luxury_goods",
+    "location": "Online",
+    "deviceId": "dev_abc124",
+    "flaggedReason": "Large transaction amount with no prior account history to compare, alongside inconsistent device use.",
+    "flaggedAt": "2026-03-12T19:30:25.048Z"
   },
   {
     "id": "txn_1086",
@@ -38,21 +22,7 @@
     "deviceId": "dev_150001",
     "isNewDevice": false,
     "country": "USA",
-    "flaggedReason": "Large transaction amount with no account history to validate against.",
-    "flaggedAt": "2026-03-12T19:22:42.120Z"
-  },
-  {
-    "id": "txn_1005",
-    "accountId": "acc_004",
-    "amount": 9100,
-    "timestamp": "2026-02-12T11:50:00Z",
-    "merchantName": "CryptoFast Exchange",
-    "merchantCategory": "financial_services",
-    "location": "Unknown VPN",
-    "deviceId": "dev_new991",
-    "isNewDevice": true,
-    "country": "Unknown",
-    "flaggedReason": "Large transaction with no account history to compare and from an unknown VPN location.",
-    "flaggedAt": "2026-03-12T19:22:47.620Z"
+    "flaggedReason": "Anomaly detected: Large transaction ($4208.51) with no account history to compare.",
+    "flaggedAt": "2026-03-12T19:31:10.634Z"
   }
 ]
