@@ -1,1 +1,54 @@
-[]
+[
+  {
+    "id": "txn_1005",
+    "accountId": "acc_004",
+    "amount": 9100,
+    "timestamp": "2026-02-12T11:50:00Z",
+    "merchantName": "CryptoFast Exchange",
+    "merchantCategory": "financial_services",
+    "location": "Unknown VPN",
+    "deviceId": "dev_new991",
+    "isNewDevice": true,
+    "country": "Unknown",
+    "flaggedReason": "Anomalous large transaction of $9100 on a new device with no prior usage. Location unknown and accessed via VPN.",
+    "flaggedAt": "2026-03-12T20:17:22.110Z"
+  },
+  {
+    "id": "txn_1043",
+    "accountId": "acc_001",
+    "amount": 2420.56,
+    "timestamp": "2026-02-13T04:21:00.000Z",
+    "merchantName": "Luxury Timepieces Intl",
+    "merchantCategory": "luxury_goods",
+    "location": "Online",
+    "deviceId": "dev_abc124",
+    "flaggedReason": "Large transaction ($2420.56) with no account history to compare",
+    "flaggedAt": "2026-03-12T20:17:36.197Z"
+  },
+  {
+    "id": "txn_1049",
+    "accountId": "acc_008",
+    "amount": 1589.39,
+    "timestamp": "2026-02-13T06:35:00.000Z",
+    "merchantName": "SkyBridge Travel",
+    "merchantCategory": "travel",
+    "location": "New York, NY",
+    "deviceId": "dev_800001",
+    "flaggedReason": "Large transaction ($1589.39) with no account history to compare",
+    "flaggedAt": "2026-03-12T20:17:41.672Z"
+  },
+  {
+    "id": "txn_1008",
+    "accountId": "acc_001",
+    "amount": 4800,
+    "timestamp": "2026-02-12T13:40:00Z",
+    "merchantName": "Luxury Timepieces Intl",
+    "merchantCategory": "luxury_goods",
+    "location": "Lagos, NG",
+    "deviceId": "dev_unknown000",
+    "isNewDevice": true,
+    "country": "Nigeria",
+    "flaggedReason": "Anomalous large transaction of $4800 on a new, unknown device from a different country (Nigeria). No previous buying pattern in account history supports such transaction.",
+    "flaggedAt": "2026-03-12T20:18:30.080Z"
+  }
+]
