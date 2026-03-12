@@ -133,8 +133,11 @@ async function runFraudDetection(options = {}) {
  * Helper: Used by server to start orchestration
  * Provides a wrapper that handles callbacks from Express routes
  */
-async function startFraudDetectionWithCallbacks(progressCallback) {
+async function startFraudDetectionWithCallbacks(progressCallback, options = {}) {
+  const { batchSize = 20 } = options;
+
   return runFraudDetection({
+    batchSize,
     onBatchStart: (info) => {
       const message = `Starting batch ${info.batchNumber}/${info.batchCount} (${info.transactionCount} transactions)...`;
       console.log(`  📊 ${message}`);

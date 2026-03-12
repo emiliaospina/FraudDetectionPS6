@@ -4,10 +4,16 @@ const path = require('path');
 const SUSPICIOUS_FILE = path.join(__dirname, '../../data/suspiciousTransactions.json');
 
 /**
- * Initialize the suspicious transactions file if it doesn't exist
+ * Initialize the suspicious transactions file if it doesn't exist or is empty
  */
 function initializeFile() {
   if (!fs.existsSync(SUSPICIOUS_FILE)) {
+    fs.writeFileSync(SUSPICIOUS_FILE, JSON.stringify([], null, 2), 'utf-8');
+    return;
+  }
+
+  const existingData = fs.readFileSync(SUSPICIOUS_FILE, 'utf-8');
+  if (!existingData.trim()) {
     fs.writeFileSync(SUSPICIOUS_FILE, JSON.stringify([], null, 2), 'utf-8');
   }
 }

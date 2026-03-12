@@ -150,7 +150,8 @@ Please analyze each transaction systematically and flag any suspicious ones.`
       successful: false,
       error: error.message,
       flaggedTransactions: [],
-      agentThinking: []
+      agentThinking: [],
+      totalProcessed: transactions.length
     };
   }
 }

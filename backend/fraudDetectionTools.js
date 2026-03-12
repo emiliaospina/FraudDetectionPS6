@@ -197,7 +197,10 @@ const toolSchemas = [
           },
           accountHistory: {
             type: 'array',
-            description: 'Previous transactions for this account'
+            description: 'Previous transactions for this account',
+            items: {
+              type: 'object'
+            }
           }
         },
         required: ['transaction']
@@ -218,7 +221,10 @@ const toolSchemas = [
           },
           accountHistory: {
             type: 'array',
-            description: 'Previous transactions for this account'
+            description: 'Previous transactions for this account',
+            items: {
+              type: 'object'
+            }
           }
         },
         required: ['transaction']
@@ -256,7 +262,10 @@ const toolSchemas = [
           },
           accountHistory: {
             type: 'array',
-            description: 'Previous transactions for this account'
+            description: 'Previous transactions for this account',
+            items: {
+              type: 'object'
+            }
           }
         },
         required: ['transaction']
