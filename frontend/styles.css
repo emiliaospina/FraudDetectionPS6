@@ -138,8 +138,28 @@ input {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.05fr 1.2fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
+}
+
+.panel-controls {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.panel-suspicious {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.panel-summary {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.panel-activity {
+  grid-column: 2;
+  grid-row: 2;
 }
 
 .panel {
@@ -309,8 +329,9 @@ input {
 }
 
 .activity-log {
-  max-height: 540px;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .activity-item {
@@ -319,6 +340,9 @@ input {
   background: var(--surface-strong);
   border: 1px solid var(--border);
   line-height: 1.45;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .activity-item.ok {
@@ -341,10 +365,82 @@ input {
   color: var(--ink);
 }
 
-@media (max-width: 960px) {
+/* Agent log entry variants */
+.activity-item.agent-iter {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--muted);
+  font-size: 0.86rem;
+  padding: 7px 14px;
+}
+
+.activity-item.agent-thinking {
+  background: #faf5ff;
+  border-color: rgba(126, 34, 206, 0.15);
+  font-style: italic;
+  color: #4c1d95;
+}
+
+.activity-item.tool-call {
+  background: #f0f9ff;
+  border-color: rgba(14, 116, 144, 0.22);
+}
+
+.activity-item.tool-result {
+  background: #f8fafc;
+  border-color: rgba(71, 85, 105, 0.18);
+}
+
+.log-time {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.log-iter {
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+.log-batch {
+  color: var(--muted);
+  font-size: 0.86rem;
+  margin-left: 4px;
+}
+
+.log-detail {
+  margin-top: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.81rem;
+  color: var(--muted);
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.log-result {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.86rem;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.log-thought {
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
   .hero,
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+
+  .panel-controls,
+  .panel-suspicious,
+  .panel-summary,
+  .panel-activity {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .summary-grid,

@@ -40,6 +40,48 @@ function addActivity(message, tone = 'neutral') {
   elements.summaryLastEvent.textContent = message;
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function addAgentLogEntry(type, data) {
+  const timestamp = new Date().toLocaleTimeString();
+  const item = document.createElement('div');
+  const batchLabel = `Batch ${escapeHtml(data.batchNumber)}/${escapeHtml(data.batchCount)}`;
+
+  if (type === 'agent_iteration') {
+    item.className = 'activity-item agent-iter';
+    item.innerHTML =
+      `<span class="log-time">[${timestamp}]</span> ` +
+      `<span class="log-iter">── ${batchLabel} — Agent iteration ${escapeHtml(data.iteration)} ──────</span>`;
+  } else if (type === 'agent_thinking') {
+    item.className = 'activity-item agent-thinking';
+    const preview = escapeHtml(data.content).substring(0, 240);
+    const ellipsis = data.content.length > 240 ? '…' : '';
+    item.innerHTML =
+      `<span class="log-time">[${timestamp}]</span> ` +
+      `💭 <em class="log-thought">${preview}${ellipsis}</em>`;
+  } else if (type === 'tool_call') {
+    item.className = 'activity-item tool-call';
+    item.innerHTML =
+      `<span class="log-time">[${timestamp}]</span> ` +
+      `📤 <strong>${escapeHtml(data.toolName)}</strong> ` +
+      `<span class="log-batch">[${batchLabel}]</span>` +
+      `<div class="log-detail">${escapeHtml(data.inputPreview)}</div>`;
+  } else if (type === 'tool_result') {
+    item.className = 'activity-item tool-result';
+    item.innerHTML =
+      `<span class="log-time">[${timestamp}]</span> ` +
+      `📥 <span class="log-result">${escapeHtml(data.resultPreview)}</span>`;
+  }
+
+  elements.activityLog.prepend(item);
+}
+
 function getTransactionMerchant(transaction) {
   return transaction.merchantName || transaction.merchant || 'Unknown';
 }
@@ -174,6 +216,12 @@ function handleEvent(event) {
     case 'error':
       setStatus(elements.runStatus, 'Failed', 'error');
       break;
+    case 'agent_iteration':
+    case 'agent_thinking':
+    case 'tool_call':
+    case 'tool_result':
+      if (data) addAgentLogEntry(type, data);
+      break;
     default:
       break;
   }
@@ -255,8 +303,8 @@ function bindEvents() {
 
 async function initializeDashboard() {
   bindEvents();
+  resetRunState();
   await checkHealth();
-  await loadCurrentSuspiciousTransactions();
   connectEventStream();
 }
 

@@ -19,12 +19,15 @@ async function processTransactionBatch(transactions, options = {}) {
   const {
     batchNumber = null,
     batchCount = null,
-    onSuspiciousDetected = () => {}
+    onSuspiciousDetected = () => {},
+    onAgentLog = () => {}
   } = options;
 
   try {
+    const batchLabel = batchNumber ? `Batch ${batchNumber}/${batchCount}` : 'Batch';
+    const startTime = Date.now();
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`Processing batch of ${transactions.length} transactions`);
+    console.log(`[${new Date().toISOString()}] ${batchLabel} STARTED — ${transactions.length} transactions`);
     console.log(`${'='.repeat(60)}`);
 
     const flaggedTransactions = [];
@@ -51,6 +54,7 @@ Please analyze each transaction systematically and flag any suspicious ones.`
     while (iterations < MAX_ITERATIONS) {
       iterations++;
       console.log(`\n--- Agent Iteration ${iterations} ---`);
+      onAgentLog({ type: 'agent_iteration', batchNumber, batchCount, iteration: iterations });
 
       // Call the Agent
       const response = await client.chat.completions.create({
@@ -77,6 +81,7 @@ Please analyze each transaction systematically and flag any suspicious ones.`
           iteration: iterations,
           content: assistantMessage.content
         });
+        onAgentLog({ type: 'agent_thinking', batchNumber, batchCount, iteration: iterations, content: assistantMessage.content });
       }
 
       // Check if Agent is done (no more tool calls)
@@ -97,11 +102,13 @@ Please analyze each transaction systematically and flag any suspicious ones.`
 
           console.log(`  📤 Tool: ${toolName}`);
           console.log(`     Input: ${JSON.stringify(toolInput).substring(0, 100)}...`);
+          onAgentLog({ type: 'tool_call', batchNumber, batchCount, iteration: iterations, toolName, inputPreview: JSON.stringify(toolInput).substring(0, 150) });
 
           // Execute the tool
           const toolResult = await executeTool(toolName, toolInput);
 
           console.log(`  📥 Result: ${JSON.stringify(toolResult).substring(0, 150)}...`);
+          onAgentLog({ type: 'tool_result', batchNumber, batchCount, iteration: iterations, toolName, resultPreview: JSON.stringify(toolResult).substring(0, 150) });
 
           // Track flagged transactions
           if (
@@ -134,8 +141,9 @@ Please analyze each transaction systematically and flag any suspicious ones.`
       }
     }
 
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`Batch complete: Flagged ${flaggedTransactions.length} transaction(s)`);
+    console.log(`[${new Date().toISOString()}] ${batchLabel} DONE in ${elapsed}s — Flagged ${flaggedTransactions.length} transaction(s)`);
     console.log(`${'='.repeat(60)}\n`);
 
     return {

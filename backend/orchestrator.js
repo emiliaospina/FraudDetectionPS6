@@ -21,7 +21,8 @@ async function runFraudDetection(options = {}) {
     onSuspiciousDetected = () => {},
     onBatchComplete = () => {},
     onComplete = () => {},
-    onError = () => {}
+    onError = () => {},
+    onAgentLog = () => {}
   } = options;
 
   try {
@@ -54,6 +55,9 @@ async function runFraudDetection(options = {}) {
         batchCount,
         onSuspiciousDetected: (event) => {
           onSuspiciousDetected(event);
+        },
+        onAgentLog: (event) => {
+          onAgentLog(event);
         }
       })
         .then(result => {
@@ -165,6 +169,19 @@ async function startFraudDetectionWithCallbacks(progressCallback, options = {}) 
         data: info,
         message
       });
+    },
+    onAgentLog: (event) => {
+      let message;
+      if (event.type === 'agent_iteration') {
+        message = `Batch ${event.batchNumber}/${event.batchCount} — Agent iteration ${event.iteration}`;
+      } else if (event.type === 'agent_thinking') {
+        message = event.content;
+      } else if (event.type === 'tool_call') {
+        message = `Tool: ${event.toolName} [Batch ${event.batchNumber}/${event.batchCount}]`;
+      } else if (event.type === 'tool_result') {
+        message = `Result: ${event.resultPreview}`;
+      }
+      progressCallback({ type: event.type, data: event, message });
     },
     onComplete: (result) => {
       progressCallback({
