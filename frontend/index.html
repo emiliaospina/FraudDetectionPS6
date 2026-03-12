@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fraud Detection Monitor</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Fraud Detection PS-6</p>
+          <h1>Parallel Transaction Screening Console</h1>
+          <p class="hero-copy">
+            Monitor batched fraud analysis, suspicious transaction output, and
+            agent activity in near real time.
+          </p>
+        </div>
+        <div class="hero-status-card">
+          <div class="status-row">
+            <span class="status-label">Backend</span>
+            <span id="backend-status" class="status-pill idle">Checking...</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Stream</span>
+            <span id="stream-status" class="status-pill idle">Disconnected</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Run</span>
+            <span id="run-status" class="status-pill idle">Idle</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-grid">
+        <section class="panel panel-controls">
+          <div class="panel-header">
+            <h2>Run Controls</h2>
+            <p>Start the orchestrator and configure batch sizing.</p>
+          </div>
+          <div class="control-row">
+            <label for="batch-size">Batch size</label>
+            <input id="batch-size" type="number" min="1" max="100" value="20" />
+          </div>
+          <div class="control-actions">
+            <button id="start-analysis-button" class="primary-button">Start Analysis</button>
+            <button id="refresh-state-button" class="secondary-button">Refresh State</button>
+          </div>
+          <div id="control-message" class="inline-message">
+            Waiting for backend status.
+          </div>
+        </section>
+
+        <section class="panel panel-summary">
+          <div class="panel-header">
+            <h2>Run Summary</h2>
+            <p>High-level view of the current screening session.</p>
+          </div>
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-label">Transactions Processed</span>
+              <strong id="summary-processed">0</strong>
+            </article>
+            <article class="summary-card alert-card">
+              <span class="summary-label">Suspicious Found</span>
+              <strong id="summary-flagged">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Parallel Batches</span>
+              <strong id="summary-batches">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Last Event</span>
+              <strong id="summary-last-event">None</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel panel-suspicious">
+          <div class="panel-header">
+            <h2>Suspicious Transactions</h2>
+            <p>Transactions recorded by the suspicious transaction tool.</p>
+          </div>
+          <div id="suspicious-empty-state" class="empty-state">
+            No suspicious transactions recorded yet.
+          </div>
+          <div id="suspicious-list" class="transaction-list"></div>
+        </section>
+
+        <section class="panel panel-activity">
+          <div class="panel-header">
+            <h2>Agent Activity</h2>
+            <p>Live stream of orchestration, batch, and detection events.</p>
+          </div>
+          <div id="activity-log" class="activity-log">
+            <div class="activity-item muted">Waiting for SSE connection.</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/dashboard.js"></script>
+  </body>
+</html>
