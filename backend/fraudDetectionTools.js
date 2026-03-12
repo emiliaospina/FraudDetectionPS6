@@ -78,7 +78,7 @@ function checkLocationVelocity(transaction, accountHistory = []) {
  * Flags risky merchant categories
  */
 function evaluateMerchantRisk(transaction) {
-  const { merchant, category } = transaction;
+  const { merchantName, merchantCategory } = transaction;
 
   // Define risky categories and merchants
   const riskyCategories = ['crypto', 'wire_transfer', 'money_transfer', 'prepaid_card'];
@@ -87,14 +87,14 @@ function evaluateMerchantRisk(transaction) {
   let riskScore = 0;
   let reason = [];
 
-  if (riskyCategories.includes(category?.toLowerCase())) {
+  if (riskyCategories.includes(merchantCategory?.toLowerCase())) {
     riskScore += 1;
-    reason.push(`Category "${category}" is flagged as high-risk`);
+    reason.push(`Category "${merchantCategory}" is flagged as high-risk`);
   }
 
-  if (riskyMerchants.some(m => merchant?.toLowerCase().includes(m))) {
+  if (riskyMerchants.some(m => merchantName?.toLowerCase().includes(m))) {
     riskScore += 2;
-    reason.push(`Merchant "${merchant}" is known for fraud patterns`);
+    reason.push(`Merchant "${merchantName}" is known for fraud patterns`);
   }
 
   if (riskScore > 0) {
@@ -193,7 +193,19 @@ const toolSchemas = [
         properties: {
           transaction: {
             type: 'object',
-            description: 'The transaction to analyze'
+            description: 'The full transaction object from the provided list',
+            properties: {
+              id: { type: 'string' },
+              accountId: { type: 'string' },
+              amount: { type: 'number' },
+              timestamp: { type: 'string' },
+              merchantName: { type: 'string' },
+              merchantCategory: { type: 'string' },
+              location: { type: 'string' },
+              deviceId: { type: 'string' },
+              isNewDevice: { type: 'boolean' },
+              country: { type: 'string' }
+            }
           },
           accountHistory: {
             type: 'array',
@@ -217,7 +229,19 @@ const toolSchemas = [
         properties: {
           transaction: {
             type: 'object',
-            description: 'The transaction to analyze'
+            description: 'The full transaction object from the provided list',
+            properties: {
+              id: { type: 'string' },
+              accountId: { type: 'string' },
+              amount: { type: 'number' },
+              timestamp: { type: 'string' },
+              merchantName: { type: 'string' },
+              merchantCategory: { type: 'string' },
+              location: { type: 'string' },
+              deviceId: { type: 'string' },
+              isNewDevice: { type: 'boolean' },
+              country: { type: 'string' }
+            }
           },
           accountHistory: {
             type: 'array',
@@ -241,7 +265,19 @@ const toolSchemas = [
         properties: {
           transaction: {
             type: 'object',
-            description: 'The transaction to analyze'
+            description: 'The full transaction object from the provided list',
+            properties: {
+              id: { type: 'string' },
+              accountId: { type: 'string' },
+              amount: { type: 'number' },
+              timestamp: { type: 'string' },
+              merchantName: { type: 'string' },
+              merchantCategory: { type: 'string' },
+              location: { type: 'string' },
+              deviceId: { type: 'string' },
+              isNewDevice: { type: 'boolean' },
+              country: { type: 'string' }
+            }
           }
         },
         required: ['transaction']
@@ -258,7 +294,19 @@ const toolSchemas = [
         properties: {
           transaction: {
             type: 'object',
-            description: 'The transaction to analyze'
+            description: 'The full transaction object from the provided list',
+            properties: {
+              id: { type: 'string' },
+              accountId: { type: 'string' },
+              amount: { type: 'number' },
+              timestamp: { type: 'string' },
+              merchantName: { type: 'string' },
+              merchantCategory: { type: 'string' },
+              location: { type: 'string' },
+              deviceId: { type: 'string' },
+              isNewDevice: { type: 'boolean' },
+              country: { type: 'string' }
+            }
           },
           accountHistory: {
             type: 'array',
@@ -282,7 +330,19 @@ const toolSchemas = [
         properties: {
           transaction: {
             type: 'object',
-            description: 'The transaction object to flag'
+            description: 'The full transaction object to flag as suspicious',
+            properties: {
+              id: { type: 'string' },
+              accountId: { type: 'string' },
+              amount: { type: 'number' },
+              timestamp: { type: 'string' },
+              merchantName: { type: 'string' },
+              merchantCategory: { type: 'string' },
+              location: { type: 'string' },
+              deviceId: { type: 'string' },
+              isNewDevice: { type: 'boolean' },
+              country: { type: 'string' }
+            }
           },
           reasonSummary: {
             type: 'string',

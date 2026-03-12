@@ -40,8 +40,25 @@ function addActivity(message, tone = 'neutral') {
   elements.summaryLastEvent.textContent = message;
 }
 
+function getTransactionMerchant(transaction) {
+  return transaction.merchantName || transaction.merchant || 'Unknown';
+}
+
+function getTransactionCurrency(transaction) {
+  return transaction.currency || 'USD';
+}
+
+function resetRunState() {
+  state.suspiciousTransactions = [];
+  elements.summaryProcessed.textContent = '0';
+  elements.summaryFlagged.textContent = '0';
+  elements.summaryBatches.textContent = '0';
+  renderSuspiciousTransactions();
+}
+
 function renderSuspiciousTransactions() {
   elements.suspiciousList.innerHTML = '';
+  elements.summaryFlagged.textContent = String(state.suspiciousTransactions.length);
 
   if (state.suspiciousTransactions.length === 0) {
     elements.suspiciousEmptyState.style.display = 'block';
@@ -57,11 +74,11 @@ function renderSuspiciousTransactions() {
     card.innerHTML = `
       <div class="transaction-card-header">
         <strong>${transaction.id}</strong>
-        <span class="transaction-amount">${transaction.currency} ${transaction.amount}</span>
+        <span class="transaction-amount">${getTransactionCurrency(transaction)} ${transaction.amount}</span>
       </div>
       <div class="transaction-meta">
         <span>Account: ${transaction.accountId}</span>
-        <span>Merchant: ${transaction.merchant}</span>
+        <span>Merchant: ${getTransactionMerchant(transaction)}</span>
         <span>Location: ${transaction.location}</span>
         <span>Device: ${transaction.deviceId}</span>
       </div>
@@ -70,8 +87,6 @@ function renderSuspiciousTransactions() {
 
     elements.suspiciousList.appendChild(card);
   });
-
-  elements.summaryFlagged.textContent = String(state.suspiciousTransactions.length);
 }
 
 async function loadCurrentSuspiciousTransactions() {
@@ -127,8 +142,7 @@ function handleEvent(event) {
       break;
     case 'run_started':
       setStatus(elements.runStatus, 'Running', 'warn');
-      elements.summaryProcessed.textContent = '0';
-      elements.summaryBatches.textContent = '0';
+      resetRunState();
       break;
     case 'batch_start':
       if (data && data.batchCount) {
@@ -214,6 +228,7 @@ async function startAnalysis() {
       throw new Error(payload.error || 'Failed to start fraud detection');
     }
 
+    resetRunState();
     setStatus(elements.runStatus, 'Starting', 'warn');
     setControlMessage(payload.message);
     addActivity(`Fraud detection requested with batch size ${batchSize}.`, 'neutral');
