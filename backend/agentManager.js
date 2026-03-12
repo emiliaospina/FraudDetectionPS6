@@ -15,7 +15,13 @@ const MODEL = 'gpt-4-turbo';
  * @param {Array} transactions - Batch of up to 20 transactions to analyze
  * @returns {Promise<Object>} { successful: true/false, flaggedTransactions: [], agentThinking: [] }
  */
-async function processTransactionBatch(transactions) {
+async function processTransactionBatch(transactions, options = {}) {
+  const {
+    batchNumber = null,
+    batchCount = null,
+    onSuspiciousDetected = () => {}
+  } = options;
+
   try {
     console.log(`\n${'='.repeat(60)}`);
     console.log(`Processing batch of ${transactions.length} transactions`);
@@ -54,7 +60,14 @@ Please analyze each transaction systematically and flag any suspicious ones.`
         tool_choice: 'auto' // Let Agent decide if tools are needed
       });
 
-      const assistantMessage = response.message;
+      const choice = response.choices && response.choices[0] ? response.choices[0] : null;
+      const assistantMessage = choice ? choice.message : null;
+      const finishReason = choice ? choice.finish_reason : null;
+
+      if (!assistantMessage) {
+        throw new Error('Agent did not return a valid message');
+      }
+
       messages.push(assistantMessage);
 
       // Log Agent's thinking
@@ -67,7 +80,7 @@ Please analyze each transaction systematically and flag any suspicious ones.`
       }
 
       // Check if Agent is done (no more tool calls)
-      if (response.stop_reason === 'end_turn' || !assistantMessage.tool_calls) {
+      if (finishReason === 'stop' && !assistantMessage.tool_calls) {
         console.log(`\nAgent completed analysis.`);
         break;
       }
@@ -96,25 +109,25 @@ Please analyze each transaction systematically and flag any suspicious ones.`
             toolResult.success
           ) {
             flaggedTransactions.push(toolResult.transaction);
+
+            // Emit rolling event as soon as a suspicious transaction is detected
+            onSuspiciousDetected({
+              batchNumber,
+              batchCount,
+              transaction: toolResult.transaction,
+              reason: toolInput.reasonSummary || toolResult.transaction.flaggedReason || 'Flagged by agent'
+            });
           }
 
           toolResults.push({
-            tool_use_id: toolCall.id,
+            role: 'tool',
+            tool_call_id: toolCall.id,
             content: JSON.stringify(toolResult)
           });
         }
 
-        // Add tool results back to conversation
-        const toolResultMessage = {
-          role: 'user',
-          content: toolResults.map(tr => ({
-            type: 'tool_result',
-            tool_use_id: tr.tool_use_id,
-            content: tr.content
-          }))
-        };
-
-        messages.push(toolResultMessage);
+        // Add tool results back to conversation for the next assistant turn
+        messages.push(...toolResults);
       } else {
         // No tool calls, Agent is done
         break;
